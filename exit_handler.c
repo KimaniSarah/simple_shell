@@ -1,12 +1,11 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "main.h"
 
 /**
  * exit_handler - handles arguments for the built-in exit
  *
  * @arg: argument passed to the function
  */
+
 void exit_handler(char **arg)
 {
 	int exitStatus;
