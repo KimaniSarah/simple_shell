@@ -10,7 +10,6 @@ void child_process(char *command_path, char **tokens)
 	pid_t pid;
 
 	pid = fork();
-
 	if (pid < 0)
 	{
 		perror("fork failed");

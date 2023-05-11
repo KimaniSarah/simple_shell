@@ -17,10 +17,13 @@ char *read_line(void)
 {
 	char *command;
 	size_t n;
-	size_t read;
+	ssize_t read;
 	int index;
 
 	command = NULL;
+	/**
+	 * initialised to null to allow getline to allocate space required
+	 */
 	n = 0;
 
 	read = getline(&command, &n, stdin);
@@ -30,10 +33,16 @@ char *read_line(void)
 		exit(1);
 	}
 	index = read - 1;
+	/**
+	 * read is the no of bytes written to command so we minus 1
+	 * because indexes start from 0
+	 */
 	if (command[index] == '\n')
 	{
 		command[index] = '\0';
 	}
-	free(command);
-	return (0);
+	/**
+	 * replace '\n' with '\0' to make it a proper string
+	 */
+	return (command);
 }

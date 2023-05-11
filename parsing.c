@@ -22,6 +22,8 @@ char **parse_line(char *command)
 	while (token_pointer != NULL)
 	{
 		tokens[index] = token_pointer;
+		index++;
+		token_pointer = strtok(NULL, TOKEN_SEPARATOR);
 	}
 	tokens[index] = NULL;
 	return (tokens);

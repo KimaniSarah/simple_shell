@@ -1,10 +1,4 @@
 #include "main.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-
-define BUF_SIZE 1024
-
 /**
  * get_line - function that reads what user types
  *
