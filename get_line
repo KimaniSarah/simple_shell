@@ -1,10 +1,10 @@
 #include "main.h"
 /**
- * get_line - function that reads what user types
+ * _getline - function that reads what user types
  *
  * Return: command string
  */
-char *get_line(void)
+char *_getline(void)
 {
 	static char buffer[BUF_SIZE];
 	static int position_at_buffer, end_of_buffer;
@@ -26,7 +26,7 @@ char *get_line(void)
 	command = malloc(BUF_SIZE);
 	cl_position = 0;
 
-	while (postion_at_bufer < end_of_buffer)
+	while (position_at_buffer < end_of_buffer)
 	{
 		if (buffer[position_at_buffer] == '\n')
 		{

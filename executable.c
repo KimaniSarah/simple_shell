@@ -18,28 +18,29 @@ char *find_executable(char **tokens)
 	token = strtok(path, ":");
 	while (token != NULL)
 	{
-		command_path = malloc(_strlen(tokens[0]) * (_strlen(token) + 2);
-				/**
-				 * +2 for the backslash and '\0' characters
-				 */
-				if (command_path == NULL)
-				{
-				return (NULL);
-				}
-				_strcpy(command_path, token);
-				_strcat(command_path, "/");
-				_strcat(command_path, token[0]);
-				if (access(command_path, F_OK) == 0)
-				{
-				break;
-				}
-				free(command_path);
-				command_path = NULL;
-				token = strtok(NULL, ":");
-				}
-				if (command_path == NULL)
-				{
-					printf("no such file");
-				}
-				return (command_path);
+		command_path = malloc(_strlen(token) * _strlen(tokens[0]) + 2);
+		/**
+		 * +2 coz of the backslash and '\0'char
+		 */
+		if (command_path == NULL)
+		{
+			return (NULL);
+		}
+		_strcpy(command_path, token);
+		_strcat(command_path, "/");
+		_strcat(command_path, tokens[0]);
+		if (access(command_path, F_OK) == 0)
+		{
+			break;
+		}
+		free(command_path);
+		command_path = NULL;
+		token = strtok(NULL, ":");
+	}
+	if (command_path == NULL)
+	{
+		perror("no such file");
+		exit(1);
+	}
+	return (command_path);
 }

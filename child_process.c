@@ -17,7 +17,7 @@ void child_process(char *command_path, char **tokens)
 	}
 	else if (pid == 0)
 	{
-		execve(command_path, tokens, NULL);
+		execve(command_path, tokens, environ);
 		perror("execve failed");
 		exit(1);
 	}

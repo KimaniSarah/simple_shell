@@ -10,21 +10,34 @@ char **parse_line(char *command)
 	int index;
 	char **tokens;
 	char *token_pointer;
+	char *command_now;
 
 	token_size = TOKEN_BUFSIZE;
+	command_now = strdup(command);
+	if (command_now == NULL)
+	{
+		return (NULL);
+	}
 	tokens = malloc(token_size * sizeof(char *));
 	if (tokens == NULL)
 	{
 		return (NULL);
 	}
-	token_pointer = strtok(command, TOKEN_SEPARATOR);
+	token_pointer = strtok(command_now, TOKEN_SEPARATOR);
 	index = 0;
 	while (token_pointer != NULL)
 	{
-		tokens[index] = token_pointer;
+		tokens[index] = strdup(token_pointer);
+		if (tokens[index] == NULL)
+		{
+			free(tokens);
+			free(command_now);
+			return (NULL);
+		}
 		index++;
 		token_pointer = strtok(NULL, TOKEN_SEPARATOR);
 	}
 	tokens[index] = NULL;
+	free(command_now);
 	return (tokens);
 }

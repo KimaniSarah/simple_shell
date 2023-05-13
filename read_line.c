@@ -6,8 +6,8 @@
  */
 void print_prompt(void)
 {
-	printf("simple_shell_project$");
-	fflush(stdout);
+	char *prompt = "$";
+	write(1, prompt, _strlen(prompt));
 }
 /**
  * read_line - reads the input put into the prompt by the user
