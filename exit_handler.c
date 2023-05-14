@@ -33,7 +33,7 @@ void exit_handler(char **arg)
 		printf("excess arguments\n");
 		return;
 	}
-	exitStatus = atoi(arg[1]);
+	exitStatus = _atoi(arg[1]);
 	exit(exitStatus);
 }
 /**
