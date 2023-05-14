@@ -6,7 +6,7 @@
  * @buffer: holds data read from the file descriptor
  * @buf_size: holds size of allocated buffer
  * @bytes: bytes read from file descriptor and stored in buffer
- * @file_descriptor: fd os stream to read from
+ * @file_descriptor: fd of stream to read from
  * Return: bytes read, -1 on failure
  */
 static int buf_read(char **buffer, size_t *buf_size, ssize_t *bytes,
@@ -58,9 +58,10 @@ static int buf_extension(char **buffer, size_t *buf_size)
 /**
  * _memchr - searches for a character of interest
  *
- * @mem - pointer to a block of memory
+ * @mem: pointer to a block of memory
  * @value: character to search for
  * @n: number of bytes to search
+ * Return: the character being searched for, NULL otherwise
  */
 void *_memchr(const void *mem, int value, size_t n)
 {
@@ -80,53 +81,51 @@ void *_memchr(const void *mem, int value, size_t n)
 /**
  * _getline - reads input from stdin
  *
- * @command: 
- * @n: 
- * @stream:
- * Return:
+ * @command: pointer to buffer where input line is stored
+ * @n: pointer to size of the buffer pointed to
+ * @stream: the data stream to read from
+ * Return: total number of bytes read
  */
 ssize_t _getline(char **command, size_t *n, FILE *stream)
 {
-	static char *buffer = NULL;
+	static char *buffer;
 	static size_t buf_size;
 	static ssize_t bytes, total_read;
 	char *start_of_line == NULL, *new_line;
-	int finish_line = 0;
+	int completed_line = 0;
 
 	if (command == NULL || n == NULL)
 		return (-1);
-
 	if (buffer == NULL || bytes == 0)
 	{
-		if (buf_read(&buffer, &buf_size, &bytes, fileno(stream)) == -1)
+		if (buf_read(&buffer, &buf_size, &bytes, STDIN_FILENO) == -1)
 			return (-1);
 	}
 	start_of_line = buffer;
-	while (!finish_line)
+	while (!completed_line)
 	{
 		new_line = _memchr(start_of_line, '\n', bytes);
 		if (new_line != NULL)
 		{
 			*new_line = '\0';
 			total_read += (new_line - start_of_line) + 1;
-			finish_line = 1;
+			completed_line = 1;
 		}
 		else
 		{
 			total_read += bytes;
 			if (buf_extension(&buffer, &buf_size) == -1)
 				return (-1);
-			bytes = read(fileno(stream), buffer + buf_size, BUF_SIZE);
+			bytes = read(STDIN_FILENO, buffer + buf_size, BUF_SIZE);
 			if (bytes == -1)
 				return (-1);
 			else if (bytes == 0)
-				finish_line = 1;
+				completed_line = 1;
 			else
 				buf_size += bytes;
 		}
 	}
-
 	*command = start_of_line;
 	*n = total_read;
-	return (total_bytes);
+	return (total_read);
 }
