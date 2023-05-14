@@ -12,7 +12,6 @@
 static int buf_read(char **buffer, size_t *buf_size, ssize_t *bytes,
 		int file_descriptor)
 {
-	ssize_t return = 0;
 
 	*buffer = (char *)malloc(BUF_SIZE);
 	if (*buffer == NULL)
