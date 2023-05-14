@@ -60,7 +60,7 @@ static int buf_extension(char **buffer, size_t *buf_size)
  * @mem: pointer to a block of memory
  * @value: character to search for
  * @n: number of bytes to search
- * Return: the character being searched for, NULL otherwise
+ * Return: void pointer to character being searched for, NULL otherwise
  */
 void *_memchr(const void *mem, int value, size_t n)
 {

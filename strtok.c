@@ -5,7 +5,7 @@
  *
  * @s: string holding the command
  * @delimiter: the delimiter
- * Return: toekn length
+ * Return: token length
  */
 int length_of_token(char *s, char *delimiter)
 {
