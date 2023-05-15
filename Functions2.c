@@ -64,7 +64,9 @@ void *_realloc(void *oldPtr, size_t size)
 	void *newPtr = malloc(size);
 
 	if (newPtr == NULL)
+	{
 		return (NULL);
+	}
 
 	if (oldPtr != NULL)
 	{

@@ -6,6 +6,7 @@
  */
 char *find_executable(char **tokens)
 {
+	char *path_now;
 	char *path;
 	char *token;
 	char *command_path;
@@ -15,7 +16,12 @@ char *find_executable(char **tokens)
 	{
 		return (NULL);
 	}
-	token = strtok(path, ":");
+	path_now = strdup(path);
+	if (path_now == NULL)
+	{
+		return (NULL);
+	}
+	token = strtok(path_now, ":");
 	while (token != NULL)
 	{
 		command_path = malloc(_strlen(token) * _strlen(tokens[0]) + 2);
@@ -42,5 +48,6 @@ char *find_executable(char **tokens)
 		perror("no such file");
 		exit(1);
 	}
+	free(path_now);
 	return (command_path);
 }

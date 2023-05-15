@@ -104,3 +104,22 @@ int _strncmp(char *s1, char *s2, int n)
 	}
 	return (0);
 }
+/**
+ * free_tokens - frees tokens
+ * tokens:tokens to be freed
+ */
+void free_tokens(char **tokens)
+{
+	int h;
+
+	if (tokens == NULL)
+	{
+		return;
+	}
+	h = 0;
+	for (h = 0; tokens[h] != NULL; h++)
+	{
+		free(tokens[h]);
+	}
+	free(tokens);
+}

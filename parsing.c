@@ -21,6 +21,7 @@ char **parse_line(char *command)
 	tokens = malloc(token_size * sizeof(char *));
 	if (tokens == NULL)
 	{
+		free(command_now);
 		return (NULL);
 	}
 	token_pointer = strtok(command_now, TOKEN_SEPARATOR);
@@ -30,7 +31,7 @@ char **parse_line(char *command)
 		tokens[index] = strdup(token_pointer);
 		if (tokens[index] == NULL)
 		{
-			free(tokens);
+			free_tokens(tokens);
 			free(command_now);
 			return (NULL);
 		}
