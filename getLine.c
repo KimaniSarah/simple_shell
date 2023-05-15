@@ -36,7 +36,7 @@ static int buf_read(char **buffer, size_t *buf_size, ssize_t *bytes,
  */
 static int buf_extension(char **buffer, size_t *buf_size)
 {
-	char *extended_buffer = NULL;
+	char *extended_buffer;
 
 	if ((*buf_size % BUF_SIZE) != 0)
 	{
@@ -44,7 +44,7 @@ static int buf_extension(char **buffer, size_t *buf_size)
 		return (0);
 	}
 
-	extended_buffer = (char *)realloc(*buffer, *buf_size + BUF_SIZE);
+	extended_buffer = (char *)_realloc(*buffer, *buf_size, *buf_size + BUF_SIZE);
 	if (extended_buffer == NULL)
 		return (-1);
 

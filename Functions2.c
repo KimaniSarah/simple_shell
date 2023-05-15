@@ -59,20 +59,44 @@ char *_memcpy(char *dest, char *src, size_t size)
  * @size: memory size to allocate
  * Return: a void pointer to newly allocated memory
  */
-void *_realloc(void *oldPtr, size_t size)
+void *_realloc(void *oldPtr, int oldSize, int size)
 {
-	void *newPtr = malloc(size);
+	void *memory;
+	char *oldPtr_copy, *newPtr;
+	int elem;
 
-	if (newPtr == NULL)
+	if (size == oldSize)
+		return (oldPtr);
+
+	if (oldPtr == NULL)
 	{
+		memory = malloc(size);
+		if (memory == NULL)
+			return (NULL);
+
+		return (memory);
+	}
+
+	if (size == 0 && oldPtr != NULL)
+	{
+		free(oldPtr);
 		return (NULL);
 	}
 
-	if (oldPtr != NULL)
+	oldPtr_copy = oldPtr;
+	memory = malloc(sizeof(*oldPtr_copy) * size);
+	if (memory == NULL)
 	{
-		_memcpy(newPtr, oldPtr, size);
 		free(oldPtr);
+		return (NULL);
 	}
 
-	return (newPtr);
+	newPtr = memory;
+
+	for (elem = 0; elem < oldSize && elem < size; elem++)
+	{
+		newPtr[elem] = *oldPtr_copy++;
+	}
+	free(oldPtr);
+	return (memory);
 }

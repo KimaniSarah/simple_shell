@@ -33,7 +33,11 @@ int token_count(char *s, char *delimiter)
 	int token = 0;
 	int length = 0;
 
-	for (elem = 0, *(s + elem); elem++)
+	for (elem = 0; *(s + elem); elem++)
+	{
+		length++;
+	}
+	for (elem = 0; elem < length; elem++)
 	{
 		if (*(s + elem) != *delimiter)
 		{

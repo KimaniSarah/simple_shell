@@ -15,6 +15,12 @@ typedef struct node
 	struct node *next;
 } Node;
 
+typedef struct list_env
+{
+	char *str;
+	struct list_env *next;
+}envlist;
+
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
 #define TOKEN_SEPARATOR " \t\r\n\a,;:"
@@ -36,11 +42,15 @@ char *_getenv(char *name);
 Node *path_LL();
 char **handle_separators(char *command);
 int change_directory(char **args);
+ssize_t _getline(char **command, size_t *n, FILE *stream);
+int _setenv(char *name, char *value, int overwrite);
+int _unsetenv(char *name);
+char **_strtok(char *cmdInput, char *delimiter);
 
 int _strcmp(char *s1, char *s2);
 int _atoi(char *str);
 char *_memcpy(char *dest, char *src, size_t size);
-void *_realloc(void *oldPtr, size_t size);
+void *_realloc(void *oldPtr, int oldSize, int size);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 int _strlen(char *s);
@@ -48,3 +58,4 @@ void free_tokens(char **tokens);
 int _strncmp(char *s1, char *s2, int n);
 
 #endif
+

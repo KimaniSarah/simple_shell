@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- * insert_node_at_end - add node to the end of a list
+ * insert_node_at_end - add node to the end of a linked list envlist
  *
- * @head:
- * @str:
- * Return:
+ * @head: pointer to first node in list
+ * @str: mallo'ced string
+ * Return: address of new node, NULL if failed
  */
 envlist *insert_node_at_end(envlist **head, const char *str)
 {
@@ -15,9 +15,9 @@ envlist *insert_node_at_end(envlist **head, const char *str)
 	if (newNode == NULL)
 		return (NULL);
 
-	newNode->str = _strdup(str);
+	newNode->str = strdup(str);
 
-	if (newNode->str = NULL)
+	if (newNode->str == NULL)
 	{
 		free(newNode);
 		return (NULL);
@@ -50,39 +50,40 @@ envlist *insert_node_at_end(envlist **head, const char *str)
  * @overwrite:
  * Return: 0 on Success, -1 on failure
  */
-int _setenv(const char *name, const char *value, int overwrite)
+int _setenv(char *name, char *value, int overwrite)
 {
-	overwrite = 1;
-	char *Envar;
+	char *envar;
 	char *setenvError = "Invalid name or value.\n";
+	envlist *node, **head;
+	size_t length;
 
-	if (!name || !*name || _strchr(name, '=') || !value)
+	if (!name || !*name || strchr(name, '=') || !value)
 	{
 		write(STDERR_FILENO, setenvError, _strlen(setenvError));
 		return (-1);
 	}
-	Envar = _getenv(name);
-	if (Envar)
+	envar = _getenv(name);
+	if (envar)
 		overwrite = 1;
 	else
 	{
-		Envar = malloc(sizeof(char) * (_strlen(name) + 2));
-		if (Envar == NULL)
+		envar = malloc(sizeof(char) * (_strlen(name) + 2));
+		if (envar == NULL)
 			return (-1);
 
-		_strcpy(Envar, name);
+		_strcpy(envar, name);
 	}
-	Envar = _realloc(Envar, sizeof(char) * (_strlen(value) + _strlen(name) + 2));
-	if (!Envar)
+	envar = _realloc(envar, sizeof(char) * (_strlen(value) + _strlen(name) + 2));
+	if (!envar)
 		return (-1);
 
 	if (overwrite)
-		_strcpy(Envar + _strlen(Envar), value);
+		_strcpy(envar + _strlen(envar), value);
 	else
 	{
-		_strcpy(Envar + _strlen(Envar), '=');
-		_strcpy(Envar + _strlen(Envar), value);
-		insert_node_at_end(&environ, Envar);
+		_strcpy(envar + _strlen(envar), "=");
+		_strcpy(envar + _strlen(envar), value);
+		insert_node_at_end(&environ, envar);
 	}
 
 	return (0);
@@ -94,13 +95,13 @@ int _setenv(const char *name, const char *value, int overwrite)
  * @name:
  * Return: 0 on Success, -1 on failure
  */
-int unsetenv(const char *name)
+int _unsetenv(char *name)
 {
 	char **envariable, **position;
 	size_t length;
-	char *unsetenvError = "Invalid name.\n"
+	char *unsetenvError = "Invalid name.\n";
 
-	if (name == NULL || *name == NULL || _strchr(name, '='))
+	if (name == NULL || !*name || strchr(name, '='))
 	{
 		write(STDERR_FILENO, unsetenvError, _strlen(unsetenvError));
 		return (-1);
@@ -124,4 +125,3 @@ int unsetenv(const char *name)
 	}
 	return (0);
 }
-

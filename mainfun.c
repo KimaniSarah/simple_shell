@@ -18,6 +18,7 @@ int main(void)
 	while(1)
 	{
 		print_prompt();
+		fflush(stdout);
 		command = read_line();
 		if (feof(stdin))
 		{

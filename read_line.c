@@ -26,7 +26,7 @@ char *read_line(void)
 	 */
 	n = 0;
 
-	read = getline(&command, &n, stdin);
+	read = _getline(&command, &n, stdin);
 	if (read == -1)
 	{
 		perror("getline failed");
