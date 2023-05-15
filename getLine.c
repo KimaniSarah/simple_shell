@@ -65,12 +65,12 @@ static int buf_extension(char **buffer, size_t *buf_size)
 void *_memchr(const void *mem, int value, size_t n)
 {
 	const unsigned char *ptr = (const unsigned char *) mem;
-	unsigned char n = (unsigned char) value;
+	unsigned char x = (unsigned char) value;
 	size_t elem;
 
 	for (elem = 0; elem < n; elem++)
 	{
-		if (*ptr == n)
+		if (*ptr == x)
 			return ((void *) ptr);
 		ptr++;
 	}
@@ -90,16 +90,18 @@ ssize_t _getline(char **command, size_t *n, FILE *stream)
 	static char *buffer;
 	static size_t buf_size;
 	static ssize_t bytes, total_read;
-	char *start_of_line == NULL, *new_line;
+	char *start_of_line;
+	char *new_line;
 	int completed_line = 0;
 
 	if (command == NULL || n == NULL)
 		return (-1);
 	if (buffer == NULL || bytes == 0)
 	{
-		if (buf_read(&buffer, &buf_size, &bytes, STDIN_FILENO) == -1)
+		if (buf_read(&buffer, &buf_size, &bytes, fileno(stream)) == -1)
 			return (-1);
 	}
+
 	start_of_line = buffer;
 	while (!completed_line)
 	{
@@ -115,7 +117,7 @@ ssize_t _getline(char **command, size_t *n, FILE *stream)
 			total_read += bytes;
 			if (buf_extension(&buffer, &buf_size) == -1)
 				return (-1);
-			bytes = read(STDIN_FILENO, buffer + buf_size, BUF_SIZE);
+			bytes = read(fileno(stream), buffer + buf_size, BUF_SIZE);
 			if (bytes == -1)
 				return (-1);
 			else if (bytes == 0)
