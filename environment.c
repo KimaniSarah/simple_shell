@@ -96,7 +96,7 @@ int _unsetenv(char *name)
 		++environ_ptr;
 	}
 	free(*environ_ptr);
-	*environ_ptr == NULL;
+	*environ_ptr = NULL;
 
 	return (0);
 }

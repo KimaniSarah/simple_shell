@@ -1,5 +1,5 @@
 #include "main.h"
-int main(void)
+int main(__attribute__((unused))int ac, __attribute__((unused))char **av)
 {
 	int h;
 	char *command;
@@ -53,11 +53,11 @@ int main(void)
 				command_path = find_executable(tokens);
 				child_process(command_path, tokens);
 			}
-			free_tokens(tokens);
+			/*free_tokens(tokens);*/
 			free(command_path);
 		}
 		free_tokens(commands);
-		free(command);
 	}
+	free(command);
 	return (0);
 }
