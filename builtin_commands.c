@@ -41,8 +41,8 @@ int change_directory(char **args)
 		return (1);
 	}
 
-	setenv("OLDPWD", oldPwd, 1);
-	setenv("PWD", currentPwd, 1);
+	_setenv("OLDPWD", oldPwd, 1);
+	_setenv("PWD", currentPwd, 1);
 	free(currentPwd);
 
 	return (0);

@@ -3,8 +3,8 @@
  * _setenv - initializes a new envt var, or modifies an existing one
  *
  * @name: name of the environment variable
- * @value:
- * @overwrite:
+ * @value: value to be set for the environment variable
+ * @overwrite: flag indicating whether to overwrite an existing var
  * Return: 0 on Success, -1 on failure
  */
 int _setenv(char *name, char *value, int overwrite)
@@ -19,12 +19,11 @@ int _setenv(char *name, char *value, int overwrite)
 		write(STDERR_FILENO, setenvError, _strlen(setenvError));
 		return (-1);
 	}
-	if (!overwrite && _getenv(name)!= NULL)
+	if (!overwrite && _getenv(name) != NULL)
 		return (0);
 	name_length = _strlen(name);
 	value_length = _strlen(value);
 	var_length = name_length + value_length + 2;
-
 	var = (char *)malloc(var_length);
 	if (var == NULL)
 		return (-1);
@@ -32,7 +31,6 @@ int _setenv(char *name, char *value, int overwrite)
 	var[name_length] = '=';
 	strncpy(var + name_length + 1, value, value_length);
 	var[var_length - 1] = '\0';
-
 	environ_ptr = environ;
 	while (*environ_ptr != NULL)
 	{
@@ -63,7 +61,7 @@ int _setenv(char *name, char *value, int overwrite)
 /**
  * _unsetenv - removes an environment variable
  *
- * @name:
+ * @name: name of the environment variable
  * Return: 0 on Success, -1 on failure
  */
 int _unsetenv(char *name)
