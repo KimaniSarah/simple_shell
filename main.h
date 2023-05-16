@@ -15,12 +15,6 @@ typedef struct node
 	struct node *next;
 } Node;
 
-typedef struct list_env
-{
-	char *str;
-	struct list_env *next;
-}envlist;
-
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
 #define TOKEN_SEPARATOR " \t\r\n\a,;:"

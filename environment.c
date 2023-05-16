@@ -1,47 +1,4 @@
 #include "main.h"
-
-/**
- * insert_node_at_end - add node to the end of a linked list envlist
- *
- * @head: pointer to first node in list
- * @str: mallo'ced string
- * Return: address of new node, NULL if failed
- */
-envlist *insert_node_at_end(envlist **head, const char *str)
-{
-	envlist *newNode, *tailNode;
-
-	newNode = malloc(sizeof(envlist));
-	if (newNode == NULL)
-		return (NULL);
-
-	newNode->str = strdup(str);
-
-	if (newNode->str == NULL)
-	{
-		free(newNode);
-		return (NULL);
-	}
-
-	newNode->next = NULL;
-
-	if (*head == NULL)
-	{
-		*head = newNode;
-	}
-	else
-	{
-		tailNode = *head;
-		while (tailNode->next != NULL)
-		{
-			tailNode = tailNode->next;
-		}
-		tailNode->next = newNode;
-	}
-
-	return (newNode);
-}
-
 /**
  * _setenv - initializes a new envt var, or modifies an existing one
  *
@@ -52,43 +9,57 @@ envlist *insert_node_at_end(envlist **head, const char *str)
  */
 int _setenv(char *name, char *value, int overwrite)
 {
-	char *envar;
-	char *setenvError = "Invalid name or value.\n";
-	envlist *node, **head;
-	size_t length;
+	char **environ_ptr, **new_environ;
+	int index, position = 0;
+	char *var, *setenvError = "Invalid name or value.\n";
+	size_t name_length, value_length, var_length;
 
 	if (!name || !*name || strchr(name, '=') || !value)
 	{
 		write(STDERR_FILENO, setenvError, _strlen(setenvError));
 		return (-1);
 	}
-	envar = _getenv(name);
-	if (envar)
-		overwrite = 1;
-	else
-	{
-		envar = malloc(sizeof(char) * (_strlen(name) + 2));
-		if (envar == NULL)
-			return (-1);
+	if (!overwrite && _getenv(name)!= NULL)
+		return (0);
+	name_length = _strlen(name);
+	value_length = _strlen(value);
+	var_length = name_length + value_length + 2;
 
-		_strcpy(envar, name);
-	}
-	envar = _realloc(envar, sizeof(char) * (_strlen(value) + _strlen(name) + 2));
-	if (!envar)
+	var = (char *)malloc(var_length);
+	if (var == NULL)
 		return (-1);
+	strncpy(var, name, name_length);
+	var[name_length] = '=';
+	strncpy(var + name_length + 1, value, value_length);
+	var[var_length - 1] = '\0';
 
-	if (overwrite)
-		_strcpy(envar + _strlen(envar), value);
-	else
+	environ_ptr = environ;
+	while (*environ_ptr != NULL)
 	{
-		_strcpy(envar + _strlen(envar), "=");
-		_strcpy(envar + _strlen(envar), value);
-		insert_node_at_end(&environ, envar);
+		if (strncmp(*environ_ptr, name, name_length) == 0 &&
+				(*environ_ptr)[name_length] == '=')
+		{
+			break;
+		}
+		++position;
+		++environ_ptr;
 	}
-
+	new_environ = (char **)malloc((position + 2) * sizeof(char *));
+	if (new_environ == NULL)
+	{
+		free(var);
+		return (-1);
+	}
+	for (index = 0; index < position; ++index)
+	{
+		new_environ[index] = *environ_ptr;
+		++environ_ptr;
+	}
+	new_environ[index] = var;
+	new_environ[index + 1] = NULL;
+	environ = new_environ;
 	return (0);
 }
-
 /**
  * _unsetenv - removes an environment variable
  *
@@ -97,8 +68,8 @@ int _setenv(char *name, char *value, int overwrite)
  */
 int _unsetenv(char *name)
 {
-	char **envariable, **position;
-	size_t length;
+	char **environ_ptr;
+	int position = 0;
 	char *unsetenvError = "Invalid name.\n";
 
 	if (name == NULL || !*name || strchr(name, '='))
@@ -107,21 +78,27 @@ int _unsetenv(char *name)
 		return (-1);
 	}
 
-	envariable = environ;
-	while (*envariable)
+	environ_ptr = environ;
+
+	while (*environ_ptr != NULL)
 	{
-		if (_strncmp(name, *envariable, length = _strlen(name)) == 0 &&
-				(*envariable)[length] == '=')
+		if (strncmp(*environ_ptr, name, _strlen(name)) == 0 &&
+					(*environ_ptr)[_strlen(name)] == '=')
 		{
-			position = envariable;
-			do
-				position[0] = position[1];
-			while (*position++);
+			break;
 		}
-		else
-		{
-			envariable++;
-		}
+		++position;
+		++environ_ptr;
 	}
+	if (*environ_ptr == NULL)
+		return (0);
+	while (environ_ptr[1] != NULL)
+	{
+		environ_ptr[0] = environ_ptr[1];
+		++environ_ptr;
+	}
+	free(*environ_ptr);
+	*environ_ptr == NULL;
+
 	return (0);
 }
