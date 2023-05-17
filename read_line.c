@@ -6,7 +6,7 @@
  */
 void print_prompt(void)
 {
-	char *prompt = "$";
+	char *prompt = "$ ";
 	write(1, prompt, _strlen(prompt));
 }
 /**

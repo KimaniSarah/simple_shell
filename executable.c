@@ -26,7 +26,7 @@ char *find_executable(char **tokens)
 	{
 		command_path = malloc(_strlen(token) * _strlen(tokens[0]) + 2);
 		/**
-		 * +2 coz of the backslash and '\0'char
+		 * +2 coz of the forwardslash and '\0'char
 		 */
 		if (command_path == NULL)
 		{
@@ -37,17 +37,19 @@ char *find_executable(char **tokens)
 		_strcat(command_path, tokens[0]);
 		if (access(command_path, F_OK) == 0)
 		{
-			break;
+			free(path_now);
+			return (command_path);
+
 		}
 		free(command_path);
 		command_path = NULL;
 		token = strtok(NULL, ":");
 	}
-	if (command_path == NULL)
+	/*if (command_path == NULL)
 	{
 		perror("no such file");
 		exit(1);
-	}
+	}*/
 	free(path_now);
-	return (command_path);
+	return (tokens[0]);
 }
