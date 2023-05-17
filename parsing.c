@@ -13,7 +13,7 @@ char **parse_line(char *command)
 	char *command_now;
 
 	token_size = TOKEN_BUFSIZE;
-	command_now = strdup(command);
+	command_now = _strdup(command);
 	if (command_now == NULL)
 	{
 		return (NULL);
@@ -24,11 +24,11 @@ char **parse_line(char *command)
 		free(command_now);
 		return (NULL);
 	}
-	token_pointer = strtok(command_now, TOKEN_SEPARATOR);
+	token_pointer = _strtok(command_now, TOKEN_SEPARATOR);
 	index = 0;
 	while (token_pointer != NULL)
 	{
-		tokens[index] = strdup(token_pointer);
+		tokens[index] = _strdup(token_pointer);
 		if (tokens[index] == NULL)
 		{
 			free_tokens(tokens);
@@ -36,7 +36,7 @@ char **parse_line(char *command)
 			return (NULL);
 		}
 		index++;
-		token_pointer = strtok(NULL, TOKEN_SEPARATOR);
+		token_pointer = _strtok(NULL, TOKEN_SEPARATOR);
 	}
 	tokens[index] = NULL;
 	free(command_now);

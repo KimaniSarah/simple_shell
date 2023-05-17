@@ -56,8 +56,6 @@ int main(void)
 			free_tokens(tokens);
 			free(command_path);
 		}
-		free_tokens(commands);
-		free(command);
 	}
 	return (0);
 }

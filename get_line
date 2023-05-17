@@ -1,0 +1,89 @@
+#include "main.h"
+/**
+ * _memchr - searches for a character of interest
+ *
+ * @mem: pointer to a block of memory
+ * @value: character to search for
+ * @n: number of bytes to search
+ * Return: void pointer to character being searched for, NULL otherwise
+ */
+void *_memchr(const void *mem, int value, size_t n)
+{
+	const unsigned char *ptr = (const unsigned char *) mem;
+	unsigned char x = (unsigned char) value;
+	size_t elem;
+
+	for (elem = 0; elem < n; elem++)
+	{
+		if (*ptr == x)
+			return ((void *) ptr);
+		ptr++;
+	}
+	return (NULL);
+}
+
+/**
+ * _getline - reads input from stdin
+ *
+ * @command: pointer to buffer where input line is stored
+ * @n: pointer to size of the buffer pointed to
+ * @stream: the data stream to read from
+ * Return: total number of bytes read
+ */
+ssize_t _getline(char **command, size_t *n, FILE *stream)
+{
+	static char *buffer = NULL;
+	static size_t buf_size = 0;
+	static ssize_t bytes = 0, total_read = 0;
+	char *new_line;
+	int completed_line = 0;
+
+	if (command == NULL || n == NULL)
+		return (-1);
+	if (buffer == NULL || buf_size == 0)
+	{
+		buffer = (char *)malloc(BUF_SIZE);
+		if (buffer == NULL)
+			return (-1);
+		buf_size = BUF_SIZE;
+	}
+
+	while (!completed_line)
+	{
+		new_line = _memchr(buffer + total_read, '\n', bytes);
+		if (new_line != NULL)
+		{
+			*new_line = '\0';
+			*command = (char *)_realloc(*command, total_read + new_line - (buffer + total_read) + 1);
+			if (*command == NULL)
+			{
+				free(buffer);
+				return (-1);
+			}
+			_strcpy(*command + total_read, buffer + total_read);
+			total_read += new_line - (buffer + total_read) + 1;
+			completed_line = 1;
+		}
+		else
+		{
+			*command = (char *)_realloc(*command, total_read + bytes + 1);
+			if (*command == NULL)
+			{
+				free(buffer);
+				return (-1);
+			}
+			_memcpy(*command + total_read, buffer + total_read, bytes);
+			total_read += bytes;
+			bytes = read(fileno(stream), buffer, buf_size);
+			if (bytes == -1)
+			{
+				free(buffer);
+				return (-1);
+			}
+			else if (bytes == 0)
+				completed_line = 1;
+		}
+	}
+	*n = total_read;
+	return (total_read);
+}

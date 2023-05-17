@@ -5,8 +5,9 @@
  * @command_path:the path to the executable file
  * Return:void
  */
-void child_process(char *command_path, char **tokens)
+int child_process(char *command_path, char **tokens)
 {
+	int status;
 	pid_t pid;
 
 	pid = fork();
@@ -23,6 +24,14 @@ void child_process(char *command_path, char **tokens)
 	}
 	else
 	{
-		wait(NULL);
+		waitpid(pid, &status, 0);
 	}
+	if (WIFEXITED(status))
+	{
+		return (WEXITSTATUS(status));
+	}
+	return (-1);
+	/**
+	 * check if the child process was successful or not
+	 */
 }

@@ -16,12 +16,12 @@ char *find_executable(char **tokens)
 	{
 		return (NULL);
 	}
-	path_now = strdup(path);
+	path_now = _strdup(path);
 	if (path_now == NULL)
 	{
 		return (NULL);
 	}
-	token = strtok(path_now, ":");
+	token = _strtok(path_now, ":");
 	while (token != NULL)
 	{
 		command_path = malloc(_strlen(token) * _strlen(tokens[0]) + 2);
@@ -41,12 +41,11 @@ char *find_executable(char **tokens)
 		}
 		free(command_path);
 		command_path = NULL;
-		token = strtok(NULL, ":");
+		token = _strtok(NULL, ":");
 	}
 	if (command_path == NULL)
 	{
 		perror("no such file");
-		exit(1);
 	}
 	free(path_now);
 	return (command_path);

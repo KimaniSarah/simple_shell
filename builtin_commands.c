@@ -17,7 +17,7 @@ int change_directory(char **args)
 	{
 
 		chdir(homedir);
-		setenv("PWD", homedir, 1);
+		_setenv("PWD", homedir, 1);
 		return (0);
 	}
 	if (strcmp(directory, "-") == 0)
