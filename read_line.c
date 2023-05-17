@@ -32,6 +32,7 @@ char *read_line(void)
 		perror("getline failed");
 		exit(1);
 	}
+
 	index = read - 1;
 	/**
 	 * read is the no of bytes written to command so we minus 1
