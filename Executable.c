@@ -16,7 +16,7 @@ char *find_executable(char **tokens)
 	{
 		return (NULL);
 	}
-	path_now = strdup(path);
+	path_now = _strdup(path);
 	if (path_now == NULL)
 	{
 		return (NULL);
@@ -48,6 +48,7 @@ char *find_executable(char **tokens)
 	/*if (command_path == NULL)
 	{
 		perror("no such file");
+
 		exit(1);
 	}*/
 	free(path_now);

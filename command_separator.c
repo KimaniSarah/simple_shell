@@ -13,7 +13,7 @@ char **handle_separators(char *command)
 	int command_num;
 	char *command_now;
 
-	command_now = strdup(command);
+	command_now = _strdup(command);
 	if (command_now == NULL)
 	{
 		return (NULL);
@@ -44,7 +44,7 @@ char **handle_separators(char *command)
 	token = strtok(command_now, ";");
 	while(token != NULL && count < command_num)
 	{
-		commands[count] = strdup(token);
+		commands[count] = _strdup(token);
 		count++;
 		token = strtok(NULL, ";");
 	}

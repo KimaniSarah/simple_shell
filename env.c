@@ -14,7 +14,7 @@ int _setenv(char *name, char *value, int overwrite)
 	char *var, *setenvError = "Invalid name or value.\n";
 	size_t name_length, value_length, var_length;
 
-	if (!name || !*name || strchr(name, '=') || !value)
+	if (!name || !*name || _strchr(name, '=') || !value)
 	{
 		write(STDERR_FILENO, setenvError, _strlen(setenvError));
 		return (-1);
@@ -27,14 +27,14 @@ int _setenv(char *name, char *value, int overwrite)
 	var = (char *)malloc(var_length);
 	if (var == NULL)
 		return (-1);
-	strncpy(var, name, name_length);
+	_strncpy(var, name, name_length);
 	var[name_length] = '=';
-	strncpy(var + name_length + 1, value, value_length);
+	_strncpy(var + name_length + 1, value, value_length);
 	var[var_length - 1] = '\0';
 	environ_ptr = environ;
 	while (*environ_ptr != NULL)
 	{
-		if (strncmp(*environ_ptr, name, name_length) == 0 &&
+		if (_strncmp(*environ_ptr, name, name_length) == 0 &&
 				(*environ_ptr)[name_length] == '=')
 		{
 			break;
@@ -70,7 +70,7 @@ int _unsetenv(char *name)
 	int position = 0;
 	char *unsetenvError = "Invalid name.\n";
 
-	if (name == NULL || !*name || strchr(name, '='))
+	if (name == NULL || !*name || _strchr(name, '='))
 	{
 		write(STDERR_FILENO, unsetenvError, _strlen(unsetenvError));
 		return (-1);
@@ -80,7 +80,7 @@ int _unsetenv(char *name)
 
 	while (*environ_ptr != NULL)
 	{
-		if (strncmp(*environ_ptr, name, _strlen(name)) == 0 &&
+		if (_strncmp(*environ_ptr, name, _strlen(name)) == 0 &&
 					(*environ_ptr)[_strlen(name)] == '=')
 		{
 			break;
