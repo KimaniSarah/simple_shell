@@ -9,6 +9,7 @@ char **parse_line(char *command)
 	int token_size;
 	int index;
 	char **tokens;
+	tokenise str;
 	char *token_pointer;
 	char *command_now;
 
@@ -24,7 +25,7 @@ char **parse_line(char *command)
 		free(command_now);
 		return (NULL);
 	}
-	token_pointer = strtok(command_now, TOKEN_SEPARATOR);
+	token_pointer = _strtok(&str, command_now, TOKEN_SEPARATOR);
 	index = 0;
 	while (token_pointer != NULL)
 	{
@@ -36,7 +37,7 @@ char **parse_line(char *command)
 			return (NULL);
 		}
 		index++;
-		token_pointer = strtok(NULL, TOKEN_SEPARATOR);
+		token_pointer = _strtok(&str, NULL, TOKEN_SEPARATOR);
 	}
 	tokens[index] = NULL;
 	free(command_now);

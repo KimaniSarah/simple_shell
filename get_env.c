@@ -14,12 +14,13 @@ char *_getenv(char *name)
 
 	while (env_variables != NULL)
 	{
-		if (_strncmp(*env_variables, name, name_length) == 0 && (*env_variables)[name_length] == '=')
+		if (_strncmp(*env_variables, name, name_length) ==
+				0 && (*env_variables)[name_length] == '=')
 			/**
 			 * because index starts from 0
 			 */
 		{
-			return &((*env_variables)[name_length + 1]);
+			return (&((*env_variables)[name_length + 1]));
 		}
 		env_variables++;
 	}

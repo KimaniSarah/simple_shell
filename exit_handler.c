@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * exit - handle the inbuilt argument exit
+ * handle_exit - handle the inbuilt argument exit
  * @tokens: arguments passed
  * Return:void
  */
@@ -37,7 +37,7 @@ void exit_handler(char **arg)
 	exit(exitStatus);
 }
 /**
- * env_handler - handles the in-built env command
+ * handle_env - handles the in-built env command
  * @tokens:the arguments passed
  * Return:void
  */
@@ -49,9 +49,10 @@ void handle_env(char **tokens)
 	{
 		if (_strcmp(tokens[0], "env") == 0)
 		{
-			for(;*env != NULL; env++)
+			while (*env != NULL)
 			{
 				printf("%s\n", *env);
+				env++;
 			}
 		}
 	}
