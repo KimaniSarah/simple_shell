@@ -39,8 +39,9 @@ int change_directory(char **args);
 ssize_t _getline(char **command, size_t *n, FILE *stream);
 int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
-char **_strtok(char *cmdInput, char *delimiter);
+char *_strtok(char *cmdInput, char *delimiter);
 void operand(char *command);
+void procfilecmd(char *file, int shell_intereactive);
 
 int _strcmp(char *s1, char *s2);
 char *_strchr(char *s, char c);

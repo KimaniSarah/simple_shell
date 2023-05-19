@@ -22,15 +22,17 @@ void handle_exit(char **tokens)
 void exit_handler(char **arg)
 {
 	int exitStatus;
+	char *argError = "no argument found\n";
+	char *exitErr = "excess arguments\n";
 
 	if (arg[1] == NULL)
 	{
-		printf("no argument found\n");
+		write(STDERR_FILENO, argError, _strlen(argError));
 		return;
 	}
 	else if (arg[2] != NULL)
 	{
-		printf("excess arguments\n");
+		write(STDERR_FILENO, exitErr, _strlen(exitErr));
 		return;
 	}
 	exitStatus = _atoi(arg[1]);

@@ -1,10 +1,13 @@
 #include "main.h"
-int main(__attribute__((unused))int argc, char **argv)
+int main(__attribute__((unused))int argc, char *argv[])
 {
-	int h;
+	int index;
 	char *command, *command_path;
 	size_t bufsize;
 	char **commands;
+	int shell_interactive;
+
+       	shell_interactive = isatty(STDIN_FILENO) ? 1 : 0;
 
 	bufsize = BUF_SIZE;
 	command = (char *)malloc(bufsize * sizeof(char));
@@ -15,7 +18,7 @@ int main(__attribute__((unused))int argc, char **argv)
 	}
 	while(1)
 	{
-		if (isatty(STDIN_FILENO))
+		if (shell_interactive)
 		{
 			print_prompt();
 			fflush(stdout);
@@ -26,9 +29,9 @@ int main(__attribute__((unused))int argc, char **argv)
 				break;
 			}
 			commands = handle_separators(command);
-			for (h = 0; commands[h] != NULL; h++)
+			for (index = 0; commands[index] != NULL; index++)
 			{
-				argv = parse_line(commands[h]);
+				argv = parse_line(commands[index]);
 				if (_strcmp(argv[0], "exit") == 0)
 				{
 					if (argv[1] != NULL)
