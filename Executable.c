@@ -39,18 +39,11 @@ char *find_executable(char **tokens)
 		{
 			free(path_now);
 			return (command_path);
-
 		}
 		free(command_path);
 		command_path = NULL;
 		token = strtok(NULL, ":");
 	}
-	/*if (command_path == NULL)
-	{
-		perror("no such file");
-
-		exit(1);
-	}*/
 	free(path_now);
 	return (tokens[0]);
 }

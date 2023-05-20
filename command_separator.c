@@ -6,19 +6,16 @@
  */
 char **handle_separators(char *command)
 {
-	char **commands;
-	char *token;
+	char **commands, *token, *command_now;
+	tokenise str;
 	int count;
-	int h, v;
-	int command_num;
-	char *command_now;
+	int command_num, h, v;
 
 	command_now = _strdup(command);
 	if (command_now == NULL)
 	{
 		return (NULL);
 	}
-
 	command_num = 0;
 	for (h = 0; command_now[h]; h++)
 	{
@@ -28,33 +25,24 @@ char **handle_separators(char *command)
 		}
 	}
 	command_num++;
-	/**
-	 * to count the number of commands present
-	 */
 	commands = malloc(sizeof(char *) * command_num);
-	/**
-	 * just space for pointers to th commands
-	 */
 	if (commands == NULL)
 	{
 		free(command_now);
 		return (NULL);
 	}
 	count = 0;
-	token = strtok(command_now, ";");
-	while(token != NULL && count < command_num)
+	token = _strtok(&str, command_now, ";");
+	while (token != NULL && count < command_num)
 	{
 		commands[count] = _strdup(token);
 		count++;
-		token = strtok(NULL, ";");
+		token = _strtok(&str, NULL, ";");
 	}
 	for (v = count; v < command_num; v++)
 	{
 		free(commands[v]);
 	}
-	/**
-	 * free unused memory
-	 */
 	free(command_now);
 	commands[count] = NULL;
 	return (commands);

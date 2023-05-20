@@ -60,6 +60,10 @@ int main(__attribute__((unused))int argc, char *argv[])
 			}
 			free_tokens(commands);
 		}
+		else
+		{
+			child_process(command_path, argv);
+		}
 	}
 	free(command);
 	return (0);

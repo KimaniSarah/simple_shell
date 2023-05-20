@@ -14,7 +14,10 @@ typedef struct node
 	char *dir;
 	struct node *next;
 } Node;
-
+typedef struct
+{
+	char* last_token;
+} tokenise;
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
 #define TOKEN_SEPARATOR " \t\r\n\a,;:"
@@ -39,9 +42,13 @@ int change_directory(char **args);
 ssize_t _getline(char **command, size_t *n, FILE *stream);
 int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
-char *_strtok(char *cmdInput, char *delimiter);
+
+/*char *_strtok(char *cmdInput, char *delimiter);*/
 void operand(char *command);
 void procfilecmd(char *file, int shell_intereactive);
+void operand(char *command);
+char* _strtok(tokenise *str, char* string, const char* delimiter);
+char *my_strchr(const char *str, int c);
 
 int _strcmp(char *s1, char *s2);
 char *_strchr(char *s, char c);
