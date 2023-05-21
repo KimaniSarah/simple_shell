@@ -1,8 +1,8 @@
 #include "main.h"
-int main(__attribute__((unused))int argc, char *argv[])
+int main(__attribute__((unused))int argc, char **argv)
 {
-	int index;
-	char *command, *command_path;
+	int index, status;
+	char *command, *command_path, **separator;
 	size_t bufsize;
 	char **commands;
 	int shell_interactive;
@@ -10,6 +10,7 @@ int main(__attribute__((unused))int argc, char *argv[])
        	shell_interactive = isatty(STDIN_FILENO) ? 1 : 0;
 
 	bufsize = BUF_SIZE;
+	command_path = NULL;
 	command = (char *)malloc(bufsize * sizeof(char));
 	if (command == NULL)
 	{
@@ -28,6 +29,7 @@ int main(__attribute__((unused))int argc, char *argv[])
 				write(STDOUT_FILENO, "\n", 1);
 				break;
 			}
+			separator = get_separators(command);
 			commands = handle_separators(command);
 			for (index = 0; commands[index] != NULL; index++)
 			{
@@ -54,15 +56,24 @@ int main(__attribute__((unused))int argc, char *argv[])
 				else
 				{
 					command_path = find_executable(argv);
-					child_process(command_path, argv);
+					status = 0;
+					status = child_process(command_path, argv);
+					if (separator != NULL)
+					{
+						if (_strcmp(separator[index], "&&") == 0 && status != 0)
+						{
+							break;
+						}
+						else if (_strcmp(separator[index], "||") == 0 && status == 0)
+						{
+							break;
+						}
+					}
 				}
-				free(command_path);
+				free_tokens(argv);
 			}
 			free_tokens(commands);
-		}
-		else
-		{
-			child_process(command_path, argv);
+			free_tokens(separator);
 		}
 	}
 	free(command);

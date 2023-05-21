@@ -7,24 +7,24 @@
 char **handle_separators(char *command)
 {
 	char **commands, *token, *command_now;
-	tokenise str;
 	int count;
-	int command_num, h, v;
+	int command_num, separators, h, v;
+	/*tokenise str;*/
 
+	separators = 0;
 	command_now = _strdup(command);
 	if (command_now == NULL)
 	{
 		return (NULL);
 	}
-	command_num = 0;
 	for (h = 0; command_now[h]; h++)
 	{
-		if (command_now[h] == ';')
+		if (command_now[h] == ';' || command_now[h] == '|' || command_now[h] == '&')
 		{
-			command_num++;
+			separators++;
 		}
 	}
-	command_num++;
+	command_num = separators + 1;
 	commands = malloc(sizeof(char *) * command_num);
 	if (commands == NULL)
 	{
@@ -32,12 +32,14 @@ char **handle_separators(char *command)
 		return (NULL);
 	}
 	count = 0;
-	token = _strtok(&str, command_now, ";");
+	token = strtok(command_now, ";&|");
+	/*token = _strtok(&str, command_now, ";&|");*/
 	while (token != NULL && count < command_num)
 	{
 		commands[count] = _strdup(token);
 		count++;
-		token = _strtok(&str, NULL, ";");
+		token = strtok(NULL, ";&|");
+		/*token = _strtok(&str, NULL, ";&|");*/
 	}
 	for (v = count; v < command_num; v++)
 	{
