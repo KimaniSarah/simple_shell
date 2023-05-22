@@ -8,7 +8,7 @@ char **get_separators(char *command)
 {
 	int len, h, v, z;
 	char **separators;
-	char sep[3] = "";
+	char sep[4] = "";
 
 	v = 0;
 	h = 0;

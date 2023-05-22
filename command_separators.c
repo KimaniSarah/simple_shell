@@ -9,7 +9,7 @@ char **handle_separators(char *command)
 	char **commands, *token, *command_now;
 	int count;
 	int command_num, separators, h, v;
-	/*tokenise str;*/
+	tokenise str;
 
 	separators = 0;
 	command_now = _strdup(command);
@@ -32,14 +32,14 @@ char **handle_separators(char *command)
 		return (NULL);
 	}
 	count = 0;
-	token = strtok(command_now, ";&|");
-	/*token = _strtok(&str, command_now, ";&|");*/
+	/*token = strtok(command_now, ";&|");*/
+	token = _strtok(&str, command_now, ";&|");
 	while (token != NULL && count < command_num)
 	{
 		commands[count] = _strdup(token);
 		count++;
-		token = strtok(NULL, ";&|");
-		/*token = _strtok(&str, NULL, ";&|");*/
+		/*token = strtok(NULL, ";&|");*/
+		token = _strtok(&str, NULL, ";&|");
 	}
 	for (v = count; v < command_num; v++)
 	{
