@@ -58,7 +58,7 @@ int main(__attribute__((unused))int argc, char **argv)
 					command_path = find_executable(argv);
 					status = 0;
 					status = child_process(command_path, argv);
-					if (separator != NULL)
+					if (separator != NULL && separator[index] != NULL)
 					{
 						if (_strcmp(separator[index], "&&") == 0 && status != 0)
 						{
