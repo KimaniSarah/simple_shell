@@ -26,9 +26,7 @@ char *find_executable(char **tokens)
 	while (token != NULL)
 	{
 		command_path = malloc(_strlen(token) * _strlen(tokens[0]) + 2);
-		/**
-		 * +2 coz of the forwardslash and '\0'char
-		 */
+		/* +2 coz of the forwardslash and '\0'char*/
 		if (command_path == NULL)
 		{
 			return (NULL);

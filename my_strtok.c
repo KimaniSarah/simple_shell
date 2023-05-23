@@ -32,7 +32,7 @@ char *_strtok(tokenise *str, char *string, const char *delimiter)
 	while (*current_token != '\0' && my_strchr(delimiter, *current_token) != NULL)
 	{
 		current_token++;
-	}	
+	}
 	if (*current_token == '\0')
 	{
 		str->last_token = NULL;

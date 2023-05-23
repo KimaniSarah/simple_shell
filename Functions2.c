@@ -57,6 +57,7 @@ char *_memcpy(char *dest, char *src, size_t size)
  *
  * @oldPtr: pointer to old block of memory
  * @size: memory size to allocate
+ * @oldSize: size of previously allocated memory
  * Return: a void pointer to newly allocated memory
  */
 void *_realloc(void *oldPtr, int oldSize, int size)
