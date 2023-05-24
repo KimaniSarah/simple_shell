@@ -16,7 +16,7 @@ typedef struct node
 } Node;
 typedef struct
 {
-	char* last_token;
+	char *last_token;
 } tokenise;
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
@@ -27,6 +27,7 @@ extern char **environ;
  * its a global variable
  */
 
+/*command helper functions*/
 void print_prompt(void);
 char *read_line(void);
 char **parse_line(char *command);
@@ -46,9 +47,9 @@ char **get_separators(char *command);
 
 /*char *_strtok(char *cmdInput, char *delimiter);*/
 void operand(char *command);
-void procfilecmd(char *file, int shell_intereactive);
+/*void procfilecmd(char *file, int shell_intereactive);*/
 void operand(char *command);
-char* _strtok(tokenise *str, char* string, const char* delimiter);
+char *_strtok(tokenise *str, char *string, const char *delimiter);
 char *my_strchr(const char *str, int c);
 void tokenise_str(tokenise *str);
 int _strcmp(char *s1, char *s2);
