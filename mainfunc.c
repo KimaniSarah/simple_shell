@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
 	signal(SIGINT, handles_sig);
 	while (1)
 	{
-		/*frees_buf(token);*/
-		/*frees_buf(pathiptr);*/
-		/*free(command_path);*/
+		frees_buf(token);
+		frees_buf(pathptr);
+		free(command_path);
 		prompt();
 		fflush(stdout);
 		size = getline(&cmdline, &buffersize, stdin);
@@ -43,6 +43,6 @@ int main(int argc, char *argv[])
 	}
 	if (size < 0 && shell.interactive)
 		write (STDERR_FILENO, "\n", 1);
-	/*free(cmdline);*/
+	free(cmdline);
 	return (0);
 }
