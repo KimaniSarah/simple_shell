@@ -16,8 +16,8 @@ char *add_path(char *command_path, char *inputstr)
 	if (command_path == 0)
 		command_path = " ";
 
-	buffer = malloc(sizeof(char) * (_strlen(command_path) + _strlen(inputstr) + 2));
-
+	buffer = malloc(sizeof(char) *
+			(_strlen(command_path) + _strlen(inputstr) + 2));
 	if (!buffer)
 		return (NULL);
 	while (command_path[index])

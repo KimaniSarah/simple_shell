@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 			execute(command_path, token);
 	}
 	if (size < 0 && shell.interactive)
-		write (STDERR_FILENO, "\n", 1);
+		write(STDERR_FILENO, "\n", 1);
 	free(cmdline);
 	return (0);
 }
