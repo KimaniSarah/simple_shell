@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 	if (argc < 1)
 		return (-1);
-	signal(SIGINT, handles_sig);
+	signal(SIGINT, sign_handler);
 	while (1)
 	{
 		frees_buf(token);

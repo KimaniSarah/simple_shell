@@ -11,27 +11,34 @@
 #include <stdbool.h>
 #include <time.h>
 
+/**
+ * struct node - linked list
+ * @dir: pointer to dir
+ * @next: next node
+ */
 typedef struct node
 {
 	char *dir;
 	struct node *next;
 } Node;
+
+/**
+ * struct - struct for tokenization
+ * @last_token: last token
+ */
 typedef struct
 {
 	char *last_token;
 } tokenise;
 
-/*tests for interactive shell*/
+/**
+ * struct shell -tests for interactive shell
+ * @interactive: mode
+ */
 struct shell
 {
 	bool interactive;
-}shell;
-
-struct builtin_t
-{
-	char *env;
-	char *exit;
-}builtin_t;
+} shell;
 
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
@@ -57,7 +64,7 @@ char *add_path(char *command_path, char *inputstr);
 char *path_validate(char **path, char *inputstr);
 char *get_path(void);
 void prompt(void);
-void handles_sig(__attribute__((unused))int num);
+void sign_handler(__attribute__((unused))int num);
 int checks_builtin(char **tokens, char *buffer);
 void execute(char *command, char **cmdptr);
 void frees_buf(char **buffer);

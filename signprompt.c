@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * handles_sig - keeps track of the mode
+ * sign_handler - keeps track of the mode
  * @num: signal no
  */
-void handles_sig(__attribute__((unused))int num)
+void sign_handler(__attribute__((unused))int num)
 {
 	write(STDERR_FILENO, "\n", 1);
 	write(STDERR_FILENO, "$ ", 2);
