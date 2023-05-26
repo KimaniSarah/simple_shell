@@ -76,11 +76,12 @@ void exit_argument(char **arg);
 char **handle_separators(char *command);
 /*int change_directory(char **args);*/
 ssize_t _getline(char **command, size_t *n, FILE *stream);
+int _setenv(char *envname, char *val, int overwrite);
+int _unsetenv(char *envname);
+void handle_comment(char *buffer);
 /*char **get_separators(char *command);*/
 
-/*char *_strtok(char *cmdInput, char *delimiter);*/
 /*void operand(char *command);*/
-/*void procfilecmd(char *file, int shell_intereactive);*/
 /*void operand(char *command);*/
 char *_strtok(tokenise *str, char *string, const char *delimiter);
 char *my_strchr(const char *str, int c);

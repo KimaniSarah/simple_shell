@@ -20,3 +20,21 @@ void prompt(void)
 	if (shell.modeInteractive)
 		write(STDERR_FILENO, "$ ", 2);
 }
+
+/**
+ * handle_comment - handles #
+ * @buffer: stores input string
+ */
+void handle_comment(char *buffer)
+{
+	int index;
+
+	while (buffer[index] != '\0')
+	{
+		if (buffer[index] == '#')
+		{
+			buffer[index] = '\0';
+		}
+		index++;
+	}
+}

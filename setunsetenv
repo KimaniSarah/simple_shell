@@ -1,0 +1,139 @@
+#include "main.h"
+
+/**
+ * is_variable - checks if env variable exists
+ * @name: the name of the environment variable
+ * Return: 1 on success, 0 otherwise
+ */
+static int is_variable(char *name)
+{
+	size_t len_name;
+	char **env;
+
+	len_name = _strlen(name);
+
+	while (*env)
+	{
+		if (_strncmp(*env, name, len_name) == 0 &&
+				(*env)[len_name] == '=')
+		{
+			return (1);
+		}
+		env++;
+	}
+	return (0);
+}
+
+/**
+ * plusvar - adds env variable
+ * @name: environment variable
+ * @value: value of env variable
+ * Return: -1 on failure, 0 on success
+ */
+static int plusvar(char *name, char *value)
+{
+	size_t len_name, len_val, new_len;
+	char *newEnv, *envptr, **newEnviron;
+	int position;
+
+	len_name = _strlen(name);
+	len_val = _strlen(value);
+	new_len = len_name + len_val + 2;
+
+	newEnv = (char *)malloc(new_len);
+	if (newEnv == NULL)
+		return (-1);
+
+	envptr = newEnv;
+	_memcpy(envptr, name, len_name);
+	envptr += len_name;
+	*envptr++ = '=';
+	_memcpy(envptr, value, len_val);
+	*envptr += len_val;
+	*envptr = '\0';
+
+	position = 0;
+	while (environ[position])
+	{
+		position++;
+	}
+	newEnviron = (char **)malloc(environ, (position + 2) * sizeof(char *));
+	if (newEnviron == NULL)
+	{
+		free(newEnv);
+		return (-1);
+	}
+	_memcpy(newEnviron, environ, position * sizeof(char *));
+	newEnviron[position] = newEnv;
+	newEnviron[position + 1] = NULL;
+	free(newEnviron);
+	environ = newEnviron;
+	return (0);
+}
+/**
+ * _setenv - sets env var
+ * @envname: name of env var
+ * @val: value of env var
+ * @overwrite: 1
+ * Return: -1 on failure, 0 on success
+ */
+int _setenv(char *envname, char *val, int overwrite)
+{
+	if (envname == NULL || val == NULL || _strchr(envname, '=')
+			!= NULL)
+	{
+		return (-1);
+	}
+
+	if (overwrite || !is_variable(envname))
+	{
+		return (plusvar(envname, val));
+	}
+	return (0);
+}
+
+/**
+ * _unsetenv - unsets or removes env var
+ * @envname: name of the env var
+ * Return: -1 on failure, 0 on success
+ */
+int _unsetenv(char *envname)
+{
+	size_t len_n;
+	char **env, **s, **d;
+	int position;
+
+	if (envname == NULL || _strchr(envname, '=') != NULL)
+		return (-1);
+
+	len_n = _strlen(envname);
+	env = environ;
+	position = 0;
+
+	while (*env)
+	{
+		if (_strncmp(*env, envname, len_n) == 0 &&
+				(*env)[len_n] == '=')
+		{
+			free(*env);
+			*env = NULL;
+			position = 1;
+		}
+		env++;
+	}
+	if (position)
+	{
+		s = environ;
+		d = environ;
+
+		while (*s)
+		{
+			if (*s != NULL)
+				*d++ = *s;
+			s++;
+		}
+		*d = NULL;
+		return (0);
+	}
+	return (-1);
+}
