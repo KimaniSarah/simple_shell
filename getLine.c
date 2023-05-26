@@ -1,4 +1,4 @@
-#include "msin.h"
+#include "main.h"
 
 /**
  * buf_read - reads data from a file descriptor
@@ -41,7 +41,7 @@ static int buf_extension(char **buffer, size_t *buf_size)
 		return (0);
 	}
 
-	extended_buffer = (char *)_realloc(*bufffer, *buf_size, *buf_size + BUF_SIZE);
+	extended_buffer = (char *)_realloc(*buffer, *buf_size, *buf_size + BUF_SIZE);
 	if (extended_buffer == NULL)
 		return (-1);
 
@@ -82,4 +82,54 @@ void *_memchr(const void *mem, int value, size_t n)
  * @stream: the data stream to read from
  * Return: total number of bytes read
  */
-ssize_t _getline(char **command,
+ssize_t _getline(char **command, size_t *n, FILE *stream)
+{
+	static char *buffer;
+	static size_t buf_size;
+	ssize_t bytes = 0, total_read = 0;
+	char *start_of_line;
+	char *new_line;
+	int completed_line = 0;
+
+	if (command == NULL || n == NULL)
+		return (-1);
+	if (buffer == NULL || bytes == 0)
+	{
+		if (buf_read(&buffer, &buf_size, &bytes, fileno(stream)) == -1)
+			return (-1);
+	}
+	start_of_line = buffer;
+	while (!completed_line)
+	{
+		new_line = _memchr(start_of_line, '\n', bytes);
+		if (new_line != NULL)
+		{
+			*new_line = '\0';
+			total_read += (new_line - start_of_line) + 1;
+			completed_line = 1;
+		}
+		else
+		{
+			total_read += bytes;
+			if (buf_extension(&buffer, &buf_size) == -1)
+			{
+				free(buffer);
+				return (-1);
+			}
+			bytes = read(fileno(stream), buffer + buf_size, BUF_SIZE);
+
+			if (bytes == -1)
+			{
+				free(buffer);
+				return (-1);
+			}
+			else if (bytes == 0)
+				completed_line = 1;
+			else
+				buf_size += bytes;
+		}
+	}
+	*command = start_of_line;
+	*n = total_read;
+	return (total_read);
+}
