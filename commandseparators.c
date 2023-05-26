@@ -18,7 +18,7 @@ char **handle_separators(char *command)
 		return (NULL);
 	for (h = 0; command_now[h]; h++)
 	{
-		if(command_now[h] == ';' || command_now[h] == '|' ||
+		if (command_now[h] == ';' || command_now[h] == '|' ||
 				command_now[h] == '&')
 		{
 			separators++;

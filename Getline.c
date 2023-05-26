@@ -5,7 +5,7 @@
  *
  * @cmdptr: buffer to store input string
  * @cmdptr_size: size of cmdptr
- * @buffer: string to assign
+ * @buf: string to assign
  * @size: size of buffer
  */
 void reassign_cmdptr(char **cmdptr, size_t *cmdptr_size, char *buf,
@@ -63,7 +63,7 @@ ssize_t _getline(char **cmdptr, size_t *cmdptr_size, FILE *stream)
 		if (readBytes == -1 || (readBytes == 0 && command == 0))
 		{
 			free(buf);
-			return(-1);
+			return (-1);
 		}
 		if (readBytes == 0 && command != 0)
 		{

@@ -33,7 +33,7 @@ typedef struct
 
 /**
  * struct shell -tests for interactive shell
- * @interactive: mode
+ * @modeInteractive: mode
  */
 struct shell
 {
@@ -73,7 +73,8 @@ int builtin_handler(char **tokens, char *inputstr);
 void exit_handler(char **tokens, char *inputstr);
 void exit_argument(char **arg);
 ssize_t _getline(char **cmdptr, size_t *cmdptr_size, FILE *stream);
-void reassign_cmdptr(char **cmdptr, size_t *cmdptr_size, char *buf, size_t size);
+void reassign_cmdptr(char **cmdptr, size_t *cmdptr_size, char *buf,
+		size_t size);
 
 char **handle_separators(char *command);
 /*int change_directory(char **args);*/
