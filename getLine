@@ -87,8 +87,7 @@ ssize_t _getline(char **command, size_t *n, FILE *stream)
 	static char *buffer;
 	static size_t buf_size;
 	ssize_t bytes = 0, total_read = 0;
-	char *start_of_line;
-	char *new_line;
+	char *start_of_line, *new_line;
 	int completed_line = 0;
 
 	if (command == NULL || n == NULL)
@@ -117,7 +116,6 @@ ssize_t _getline(char **command, size_t *n, FILE *stream)
 				return (-1);
 			}
 			bytes = read(fileno(stream), buffer + buf_size, BUF_SIZE);
-
 			if (bytes == -1)
 			{
 				free(buffer);
