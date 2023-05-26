@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 		free(command_path);
 		prompt();
 		fflush(stdout);
-		size = getline(&cmdline, &buffersize, stdin);
+		size = _getline(&cmdline, &buffersize, stdin);
 		if (size < 0)
 			break;
 		if (cmdline[size - 1] == '\n')
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 		else
 			execute(command_path, token);
 	}
-	if (size < 0 && shell.interactive)
+	if (size < 0 && shell.modeInteractive)
 		write(STDERR_FILENO, "\n", 1);
 	free(cmdline);
 	return (0);

@@ -16,7 +16,7 @@ void sign_handler(__attribute__((unused))int num)
 void prompt(void)
 {
 	if ((isatty(STDIN_FILENO) == 1) && (isatty(STDOUT_FILENO == 1)))
-		shell.interactive = 1;
-	if (shell.interactive)
+		shell.modeInteractive = 1;
+	if (shell.modeInteractive)
 		write(STDERR_FILENO, "$ ", 2);
 }

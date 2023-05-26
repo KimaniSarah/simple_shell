@@ -37,7 +37,7 @@ typedef struct
  */
 struct shell
 {
-	bool interactive;
+	bool modeInteractive;
 } shell;
 
 #define TOKEN_BUFSIZE 1024
@@ -71,8 +71,11 @@ void frees_buf(char **buffer);
 void handle_env(void);
 int builtin_handler(char **tokens, char *inputstr);
 void exit_handler(char **tokens, char *inputstr);
+void exit_argument(char **arg);
+ssize_t _getline(char **cmdptr, size_t *cmdptr_size, FILE *stream);
+void reassign_cmdptr(char **cmdptr, size_t *cmdptr_size, char *buf, size_t size);
 
-/*char **handle_separators(char *command);*/
+char **handle_separators(char *command);
 /*int change_directory(char **args);*/
 /*ssize_t _getline(char **command, size_t *n, FILE *stream);*/
 /*char **get_separators(char *command);*/
@@ -80,7 +83,7 @@ void exit_handler(char **tokens, char *inputstr);
 /*char *_strtok(char *cmdInput, char *delimiter);*/
 /*void operand(char *command);*/
 /*void procfilecmd(char *file, int shell_intereactive);*/
-void operand(char *command);
+/*void operand(char *command);*/
 char *_strtok(tokenise *str, char *string, const char *delimiter);
 char *my_strchr(const char *str, int c);
 void tokenise_str(tokenise *str);
