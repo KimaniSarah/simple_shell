@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 		free(command_path);
 		prompt();
 		fflush(stdout);
-		size = _getline(&cmdline, &buffersize, stdin);
+		size = getline(&cmdline, &buffersize, stdin);
 		if (size < 0)
 			break;
 		if (cmdline[size - 1] == '\n')
