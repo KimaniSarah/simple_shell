@@ -57,7 +57,7 @@ char *find_executable(char **tokens);
 /*void handle_env(char **tokens);*/
 /*void handle_exit(char **tokens);*/
 /*void exit_handler(char **arg);*/
-/*char *_getenv(char *name);*/
+char *_getenv(char *name);
 Node *path_LL();
 
 char *add_path(char *command_path, char *inputstr);
