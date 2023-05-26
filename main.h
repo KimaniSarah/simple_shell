@@ -72,9 +72,6 @@ void handle_env(void);
 int builtin_handler(char **tokens, char *inputstr);
 void exit_handler(char **tokens, char *inputstr);
 void exit_argument(char **arg);
-/*ssize_t _getline(char **cmdptr, size_t *cmdptr_size, FILE *stream);*/
-/*void reassign_cmdptr(char **cmdptr, size_t *cmdptr_size, char *buf,
-		size_t size);*/
 
 char **handle_separators(char *command);
 /*int change_directory(char **args);*/
