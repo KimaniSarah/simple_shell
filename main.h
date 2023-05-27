@@ -40,6 +40,16 @@ struct shell
 {
 	bool modeInteractive;
 } shell;
+#define MAX_ALIAS_COUNT 10
+#define MAX_ALIAS_NAME_LENGTH 20
+#define MAX_ALIAS_VALUE_LENGTH 50
+
+typedef struct {
+    char name[MAX_ALIAS_NAME_LENGTH];
+    char value[MAX_ALIAS_VALUE_LENGTH];
+} Alias;
+Alias aliases[MAX_ALIAS_COUNT];
+void handle_alias_command(char* args[], int argCount);
 #define MAX_PATH_LENGTH 1024
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
@@ -49,6 +59,7 @@ struct shell
 extern char **environ;
 extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 
+void remove_comments(char *command);
 /*command helper functions*/
 /*void print_prompt(void);*/
 char *read_line(void);

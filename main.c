@@ -23,6 +23,7 @@ int main(__attribute__((unused))int argc, char *argv[])
 		size = getline(&cmdline, &buffersize, stdin);
 		if (size < 0)
 			break;
+		remove_comments(cmdline);
 		if (cmdline[size - 1] == '\n')
 			cmdline[size - 1] = '\0';
 		token = parse_line(cmdline);
@@ -31,6 +32,11 @@ int main(__attribute__((unused))int argc, char *argv[])
 		if (_strcmp(token[0], "cd") == 0)
 		{
 			change_d(token[1]);
+			continue;
+		}
+		if (_strcmp(token[0], "alias") == 0)
+		{
+			handle_alias_command(token, size);
 			continue;
 		}
 		if (checks_builtin(token, cmdline))

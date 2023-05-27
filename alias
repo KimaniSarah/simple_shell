@@ -1,0 +1,53 @@
+#include"main.h"
+int aliasCount = 0;
+void handle_alias_command(char* args[], int argCount) {
+    if (argCount == 1) {
+        // Print all aliases
+        for (int i = 0; i < aliasCount; i++) {
+            printf("%s='%s'\n", aliases[i].name, aliases[i].value);
+        }
+    } else {
+        // Process individual aliases
+        for (int i = 1; i < argCount; i++) {
+            char* arg = args[i];
+            char* equals = strchr(arg, '=');
+
+            if (equals == NULL) {
+                // Print alias value
+                for (int j = 0; j < aliasCount; j++) {
+                    if (strcmp(aliases[j].name, arg) == 0) {
+                        printf("%s='%s'\n", aliases[j].name, aliases[j].value);
+                        break;
+                    }
+                }
+            } else {
+                // Define or update alias
+                *equals = '\0';
+                char* name = arg;
+                char* value = equals + 1;
+
+                // Check if the alias already exists
+                int found = 0;
+                for (int j = 0; j < aliasCount; j++) {
+                    if (strcmp(aliases[j].name, name) == 0) {
+                        strncpy(aliases[j].value, value, MAX_ALIAS_VALUE_LENGTH - 1);
+                        found = 1;
+                        break;
+                    }
+                }
+
+                // If the alias doesn't exist, create a new one
+                if (!found) {
+                    if (aliasCount < MAX_ALIAS_COUNT) {
+                        strncpy(aliases[aliasCount].name, name, MAX_ALIAS_NAME_LENGTH - 1);
+                        strncpy(aliases[aliasCount].value, value, MAX_ALIAS_VALUE_LENGTH - 1);
+                        aliasCount++;
+                    } else {
+                        fprintf(stderr, "Maximum number of aliases reached\n");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
