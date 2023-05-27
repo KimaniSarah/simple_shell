@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stddef.h>
+#include <sys/stat.h>
 #include <stdbool.h>
 #include <time.h>
 
@@ -39,7 +40,7 @@ struct shell
 {
 	bool modeInteractive;
 } shell;
-
+#define MAX_PATH_LENGTH 1024
 #define TOKEN_BUFSIZE 1024
 #define BUF_SIZE 1024
 #define TOKEN_SEPARATOR " \t\r\n\a,;:"
@@ -51,6 +52,7 @@ extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 /*command helper functions*/
 /*void print_prompt(void);*/
 char *read_line(void);
+void change_directory(const char *path);
 char **parse_line(char *command);
 char *find_executable(char **tokens);
 /*int child_process(char *command_path, char **tokens);*/
@@ -72,8 +74,8 @@ void handle_env(void);
 int builtin_handler(char **tokens, char *inputstr);
 void exit_handler(char **tokens, char *inputstr);
 void exit_argument(char **arg);
-
-char **handle_separators(char *command);
+char** handle_separators(char* command, int* numCommands);
+/*char **handle_separators(char *command);*/
 /*int change_directory(char **args);*/
 ssize_t _getline(char **command, size_t *n, FILE *stream);
 int _setenv(char *envname, char *val, int overwrite);
