@@ -7,7 +7,7 @@
 char *find_executable(char **tokens)
 {
 	tokenise str;
-	char *path_now, *null_exec;
+	char *path_now;
 	char *path;
 	char *token;
 	char *command_path;
@@ -44,11 +44,5 @@ char *find_executable(char **tokens)
 		token = _strtok(&str, NULL, ":");
 	}
 	free(path_now);
-	null_exec = malloc(_strlen(tokens[0]) + 1);
-	if (null_exec == NULL)
-	{
-		return (NULL);
-	}
-	_strcpy(null_exec, tokens[0]);
-	return (null_exec);
+	return (tokens[0]);
 }
