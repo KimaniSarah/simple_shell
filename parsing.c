@@ -6,20 +6,20 @@
  */
 char **parse_line(char *command)
 {
-	int token_size;
+	int tokens_max;
 	int index;
-	char **tokens;
+	char **tokens, **tokens_new;
 	tokenise str;
 	char *token_pointer;
 	char *command_now;
 
-	token_size = TOKEN_BUFSIZE;
+	tokens_max = 4;
 	command_now = _strdup(command);
 	if (command_now == NULL)
 	{
 		return (NULL);
 	}
-	tokens = malloc(token_size * sizeof(char *));
+	tokens = malloc(tokens_max * sizeof(char *));
 	if (tokens == NULL)
 	{
 		free(command_now);
@@ -37,6 +37,18 @@ char **parse_line(char *command)
 			return (NULL);
 		}
 		index++;
+		if (index >= tokens_max)
+		{
+			tokens_max *= 2;
+			tokens_new = realloc(tokens, sizeof(char *) * tokens_max);
+			if (tokens_new == NULL)
+			{
+				free(command_now);
+				free_tokens(tokens);
+				return (NULL);
+			}
+			tokens = tokens_new;
+		}
 		token_pointer = _strtok(&str, NULL, TOKEN_SEPARATOR);
 	}
 	tokens[index] = NULL;
