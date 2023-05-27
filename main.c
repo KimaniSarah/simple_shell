@@ -34,11 +34,6 @@ int main(__attribute__((unused))int argc, char *argv[])
 			change_d(token[1]);
 			continue;
 		}
-		if (_strcmp(token[0], "alias") == 0)
-		{
-			handle_alias_command(token, size);
-			continue;
-		}
 		if (checks_builtin(token, cmdline))
 			continue;
 		findpath = get_path();
