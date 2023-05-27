@@ -52,7 +52,9 @@ extern __sighandler_t signal(int __sig, __sighandler_t __handler);
 /*command helper functions*/
 /*void print_prompt(void);*/
 char *read_line(void);
+int set_check(char **token);
 void change_directory(const char *path);
+void change_d(char *tokens);
 char **parse_line(char *command);
 char *find_executable(char **tokens);
 /*int child_process(char *command_path, char **tokens);*/

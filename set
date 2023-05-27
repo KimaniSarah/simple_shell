@@ -1,0 +1,42 @@
+#include "main.h"
+/**
+ * set_check - handle setenv and unsetenv
+ * @token:to find the env
+ * Return: int
+ */
+int set_check(char **token)
+{
+	if (token == NULL || *token == NULL)
+	{
+		return (0);
+	}
+	if(_strcmp(token[0], "setenv") == 0)
+	{
+		if (token[1] == NULL || token[2] == NULL || token[3] != NULL)
+		{
+			perror("error");
+			return(1);
+		}
+		if (setenv(token[1], token[2], 1) != 0)
+		{
+			perror ("error");
+			return (1);
+		}
+		return (1);
+	}
+	if(_strcmp(token[0], "unsetenv") == 0)
+	{
+		if (token[1] == NULL || token[2] != NULL)
+		{
+			perror("error");
+			return (1);
+		}
+		if (unsetenv(token[1]) != 0)
+		{
+			perror("error");
+			return (1);
+		}
+		return (1);
+	}
+	return (0);
+}
