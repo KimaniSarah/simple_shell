@@ -76,7 +76,7 @@ void handle_env(void);
 int builtin_handler(char **tokens, char *inputstr);
 void exit_handler(char **tokens, char *inputstr);
 void exit_argument(char **arg);
-char** handle_separators(char* command, int* numCommands);
+char **handle_separators(char *command, int *numCommands);
 /*char **handle_separators(char *command);*/
 /*int change_directory(char **args);*/
 ssize_t _getline(char **command, size_t *n, FILE *stream);
