@@ -2,13 +2,10 @@
 /**
  * change_d - changes dir
  * @tokens: the tokens
- * Return: void
  */
 void change_d(char *tokens)
 {
-	char *home_dir;
-	char *old_dir;
-	char current_path[MAX_PATH_LENGTH];
+	char *home_dir, *old_dir, current_path[MAX_PATH_LENGTH];
 
 	if (tokens == NULL)
 	{
@@ -35,7 +32,6 @@ void change_d(char *tokens)
 		if (chdir(old_dir) != 0)
 		{
 			perror("chdir() error");
-			return;
 		}
 	}
 	else
@@ -43,13 +39,10 @@ void change_d(char *tokens)
 		if (chdir(tokens) != 0)
 		{
 			perror("error");
-			return;
 		}
 	}
 	if (getcwd(current_path, sizeof(current_path)) == NULL)
 	{
 		perror("getcwd() error");
-		return;
 	}
-	printf("Directory changed to: %s\n", current_path);
 }
